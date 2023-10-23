@@ -1,0 +1,49 @@
+{
+    "%vlocity_namespace%__Active__c": true,
+    "%vlocity_namespace%__OmniScriptId__c": {
+        "Name": "ServiceRetry",
+        "VlocityDataPackType": "VlocityMatchingKeyObject",
+        "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__OmniScript__c/etb/ServiceRetry/English",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OmniScript__c"
+    },
+    "%vlocity_namespace%__PropertySet__c": {
+        "HTMLTemplateId": "",
+        "controlWidth": 12,
+        "elementValueMap": {
+            "message": {
+                "Action": "%message:Action%",
+                "BottomMessage": "%message:MainMessage%",
+                "Button": {
+                    "URL": "%ContextId%"
+                },
+                "ErrorOs": "%errorOs%",
+                "LabelFirstButton": "Finalizar",
+                "LabelSecondButton": "%labelSecondButton%",
+                "MiddleMessage": "%message:MainMessage%",
+                "Object": "%sObject%",
+                "ObjectRedirect": "%ContextId%",
+                "OrderNumber": "%OrderNumber%",
+                "SecondButton": false,
+                "TabToNav": "Ocurrió un error",
+                "TopMessage": "%message:MainMessage%"
+            }
+        },
+        "label": "SetValuesMsgInfo",
+        "message": {
+        },
+        "pubsub": false,
+        "show": null,
+        "showPersistentComponent": [
+            true,
+            false
+        ],
+        "ssm": false,
+        "wpm": false
+    },
+    "%vlocity_namespace%__ReusableOmniScript__c": false,
+    "%vlocity_namespace%__Type__c": "Set Values",
+    "Name": "SetValues2",
+    "VlocityDataPackType": "SObject",
+    "VlocityRecordSObjectType": "%vlocity_namespace%__Element__c",
+    "VlocityRecordSourceKey": "%vlocity_namespace%__Element__c/%vlocity_namespace%__OmniScript__c/etb/ServiceRetry/English/SetValues2"
+}

@@ -4,5 +4,6 @@
     "**/bower_components": true,
     "**/.sfdx": true
   },
-  "vlocity.sfdxUsername": "wuilmer.palacios@etlsoluciones.com.preprodetb"
+  "vlocity.sfdxUsername": "wuilmer.palacios@etlsoluciones.com.devpricetb",
+  "vlocity.projectPath": "c:\\Users\\WuilmerAndresPalacio\\Documents\\Proyectos SQDM\\ETB\\ETB\\Vlocity"
 }

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Reintentar_Servicio</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <height>600</height>
+    <linkType>url</linkType>
+    <masterLabel>Reintentar Servicio</masterLabel>
+    <openType>sidebar</openType>
+    <protected>false</protected>
+    <url>/lightning/cmp/vlocity_cmt__vlocityLWCOmniWrapper?c__target=c:etbServiceRetryEnglish&amp;c__tabLabel=Reintentar%20Servicio&amp;c__layout=lightning&amp;c__tabIcon=standard:events&amp;c__ContextId={!Order.Id}</url>
+</WebLink>
