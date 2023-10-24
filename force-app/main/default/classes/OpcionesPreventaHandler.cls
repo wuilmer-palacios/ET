@@ -54,7 +54,10 @@ public with sharing class OpcionesPreventaHandler {
                                                                                     LastModifiedById, SystemModstamp, ServiceAccount__c, Quote__c, Viability__c, Order__c, 
                                                                                     Product__c, Product__r.ProductCode, opportunityId__c, OrderProduct__c, Cantidad__c, label__c, Atributos__c, 
                                                                                     Operacion__c, parentId__c, valorRecurrente__c, valorUnicaVez__c, descuento__c, fechaPrecio__c, 
-                                                                                    idPaquete__c, BillingAccount__c, QuoteLineItem__c, ItemGestorId__c, Contact__c, tarifasMensual__c, tarifasUnicaVez__c, PricingOK__c
+                                                                                    idPaquete__c, BillingAccount__c, QuoteLineItem__c, ItemGestorId__c, Contact__c, tarifasMensual__c, tarifasUnicaVez__c, PricingOK__c,
+                                                                                    Quote__r.ETB_GL_PorcentajeAsignacion__c,
+                                                                                    Quote__r.Impuestos_Adicionales__c,
+                                                                                    QuoteLineItem__r.Valor_Recurrente_Anterior__c
                                                                                     FROM OpcionesPreventa__c
                                                                                    	WHERE PricingOK__c = false 
                                                                                     AND Quote__c =: QuoteOrigenId]); 
@@ -350,6 +353,9 @@ public with sharing class OpcionesPreventaHandler {
             mapProduct.put('BillingAccId', null);
             mapProduct.put('parentId', null);
             mapProduct.put('productCode', opcsPreventa.Product__r.ProductCode);
+            mapProduct.put('PorcentajeAsignacion', opcsPreventa.Quote__r.ETB_GL_PorcentajeAsignacion__c,);
+            mapProduct.put('ImpuestosAdicionales', opcsPreventa.Quote__r.Impuestos_Adicionales__c,);
+            mapProduct.put('ValorRecurrenteAnterior', opcsPreventa.QuoteLineItem__r.Valor_Recurrente_Anterior__c);
             mapProduct.put('QuoteLineItemId', itemId);
             mapProduct.put('Operacion', null);
             mapProduct.put('pricingGL', pricingGL);

@@ -129,8 +129,9 @@ global class CreateQuoteLineItem_bch implements Database.Batchable<Object> {
                 }
 
                 mapValoresAtributos = ETB_PricingHandlerCls.cleanMapAttributes(mapAtributos);
-            	mapValoresAtributos.put('PorcentajeAsignacion', '100');
-            	mapValoresAtributos.put('Impuestos_regionales_adicionales', '0');
+            	mapValoresAtributos.put('PorcentajeAsignacion', mapProducto.get('PorcentajeAsignacion'));
+            	mapValoresAtributos.put('Impuestos_regionales_adicionales', mapProducto.get('ImpuestosAdicionales'));
+            	mapValoresAtributos.put('ValorRecurrenteAnterior', mapProducto.get('ValorRecurrenteAnterior'));
             	mapValoresAtributos.put('tipoPricing','Automatico');
             	mapValoresAtributos.put('ProductCode', mapProducto.get('productCode'));
                 mapValoresAtributos.put('path',metadataProducto.ETB_GL_Path__c);

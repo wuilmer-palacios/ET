@@ -6,7 +6,6 @@
     <customButtons>vlocity_cmt__Multi_Site_Order</customButtons>
     <customButtons>vlocity_cmt__GenerateDocumentPDF</customButtons>
     <customButtons>vlocity_cmt__Configure</customButtons>
-    <customButtons>Reintentar_Servicio</customButtons>
     <excludeButtons>ChangeRecordType</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -28,131 +27,127 @@
                 <field>AccountId</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__OpportunityId__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Legalizaci_n__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Order_OM__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Required</behavior>
                 <field>EffectiveDate</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Type</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Order_Subtype__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Total_efectivo_recurrente__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>vlocity_cmt__OneTimeTotal__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Fecha_Suspension__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Fecha_Reconexion__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>Status</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Type</field>
+                <field>CausalDeclinacion__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>BillToContactId</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>BillingAddress</field>
+                <field>TipoCausalDeclinacion__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>CreatedById</field>
+                <field>vlocity_cmt__Pricebook__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Case__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Retencion__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ActivatedDate</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>MotivoSuspension__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Description</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>vlocity_cmt__ValidationStatus__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>vlocity_cmt__ValidationDate__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>vlocity_cmt__ValidationMessage__c</field>
+                <behavior>Edit</behavior>
+                <field>Resumen_tecnico__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>vlocity_cmt__FrameContractId__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>vlocity_cmt__Pricebook__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>vlocity_cmt__EffectiveOneTimeTotal__c</field>
+                <field>Revisado_Facturacion__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>vlocity_cmt__EffectiveRecurringTotal__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>vlocity_cmt__NumberOfContractedMonths__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>vlocity_cmt__Tax__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>vlocity_cmt__EffectiveOrderTotal__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ShipToContactId</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ShippingAddress</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>vlocity_cmt__OriginatingChannel__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>vlocity_cmt__IsContractRequired__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>LastModifiedById</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>vlocity_cmt__DefaultServiceAccountId__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>vlocity_cmt__DefaultBillingAccountId__c</field>
+                <field>vlocity_cmt__EffectiveOneTimeTotal__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
     <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
-        <label>Totals</label>
-        <layoutColumns/>
-        <layoutColumns/>
-        <style>TwoColumnsTopToBottom</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
-        <label>Address Information</label>
-        <layoutColumns/>
-        <layoutColumns/>
-        <style>TwoColumnsTopToBottom</style>
-    </layoutSections>
-    <layoutSections>
         <customLabel>false</customLabel>
-        <detailHeading>false</detailHeading>
-        <editHeading>false</editHeading>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
         <label>System Information</label>
-        <layoutColumns/>
-        <layoutColumns/>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>CreatedById</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Estado_integracion__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>LastModifiedById</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Contexto_estado_integracion__c</field>
+            </layoutItems>
+        </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
     <layoutSections>
@@ -185,8 +180,8 @@
     <relatedLists>
         <fields>Product2</fields>
         <fields>Related_Item_Product_Name__c</fields>
-        <fields>vlocity_cmt__RecurringCharge__c</fields>
-        <fields>Quantity</fields>
+        <fields>vlocity_cmt__EffectiveRecurringTotal__c</fields>
+        <fields>Total_Recurrente_Manual__c</fields>
         <relatedList>RelatedOrderItemList</relatedList>
     </relatedLists>
     <relatedLists>
@@ -222,7 +217,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h7j000000ZSDc</masterLabel>
+        <masterLabel>00h4y00000KoK7v</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
