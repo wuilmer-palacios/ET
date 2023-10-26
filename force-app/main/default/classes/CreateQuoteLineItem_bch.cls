@@ -136,6 +136,11 @@ global class CreateQuoteLineItem_bch implements Database.Batchable<Object> {
             	mapValoresAtributos.put('ProductCode', mapProducto.get('productCode'));
                 mapValoresAtributos.put('path',metadataProducto.ETB_GL_Path__c);
                 mapValoresAtributos.put('calculoBundle',metadataProducto.ETB_GL_CalculoBundle__c);
+
+                System.debug('****************** CreateQuoteLineItem_bch ******************');
+                System.debug('PorcentajeAsignacion' + mapProducto.get('PorcentajeAsignacion'));
+                System.debug('ImpuestosAdicionales' + mapProducto.get('ImpuestosAdicionales'));
+                System.debug('ValorRecurrenteAnterior'+ mapProducto.get('ValorRecurrenteAnterior'));
                 
                 if(!Test.isRunningTest()){
                     iOutput = ETB_PricingHandlerCls.calculatePricing(metadataProducto, mapValoresAtributos);

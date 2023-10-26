@@ -353,13 +353,17 @@ public with sharing class OpcionesPreventaHandler {
             mapProduct.put('BillingAccId', null);
             mapProduct.put('parentId', null);
             mapProduct.put('productCode', opcsPreventa.Product__r.ProductCode);
-            mapProduct.put('PorcentajeAsignacion', opcsPreventa.Quote__r.ETB_GL_PorcentajeAsignacion__c,);
-            mapProduct.put('ImpuestosAdicionales', opcsPreventa.Quote__r.Impuestos_Adicionales__c,);
+            mapProduct.put('PorcentajeAsignacion', opcsPreventa.Quote__r.ETB_GL_PorcentajeAsignacion__c);
+            mapProduct.put('ImpuestosAdicionales', opcsPreventa.Quote__r.Impuestos_Adicionales__c);
             mapProduct.put('ValorRecurrenteAnterior', opcsPreventa.QuoteLineItem__r.Valor_Recurrente_Anterior__c);
             mapProduct.put('QuoteLineItemId', itemId);
             mapProduct.put('Operacion', null);
             mapProduct.put('pricingGL', pricingGL);
             mapProduct.put('idOpcionPreventa', opcsPreventa.Id);
+            System.debug('****************** OpcionesPreventaHandler ******************');
+            System.debug('PorcentajeAsignacion' + mapProduct.get('PorcentajeAsignacion'));
+            System.debug('ImpuestosAdicionales' + mapProduct.get('ImpuestosAdicionales'));
+            System.debug('ValorRecurrenteAnterior'+ mapProduct.get('ValorRecurrenteAnterior'));
             
             discount.put('EstadoDescuento', null);
             discount.put('ValorDescuento', null);
