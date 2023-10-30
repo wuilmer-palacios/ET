@@ -1,0 +1,140 @@
+<template>
+  <div class="slds-grid slds-wrap slds-grid_vertical-align-center">
+    <div class="slds-col slds-align-bottom slds-p-top_small ">
+      <lightning-button variant="base" onclick={navigateToRecord} label="Cotización Origen" title="Abrir cotización" icon-name="utility:quote" class="slds-m-left_x-small slds-text-heading_small"></lightning-button>
+    </div>
+    <div class="slds-p-horizontal_small slds-col_bump-left">
+      <p class="slds-p-bottom_xx-small">Descuento masivo</p>
+      <lightning-button-group>
+          <input type="number" class="slds-input inputNumberCssCustom" data-field ="inputMassivePercentage" min="0" max="100" autocomplete="off" step="1" onchange={handleChangeInputMassivePercentageValue} name="inputMassivePercentage" value={inputBotonDescuentoMasivo}/>
+          <lightning-button-icon 
+              icon-name="utility:success" 
+              variant="brand" 
+              alternative-text="Settings"
+              onclick={handleMassiveDiscount}
+          ></lightning-button-icon>
+      </lightning-button-group>
+    </div> 
+
+    <div class="slds-p-around_x-small slds-size_1-of-1 slds-text-align_right">
+        <label class="slds-text-body_small cp_info-text" style="color: rgb(88, 118, 163);">
+            productos seleccionados: {cantProdSelec}
+        </label>
+    </div>
+    <div class="slds-p-horizontal_x-small slds-size_1-of-1 slds-text-align_right">
+        <label>Seleccionar todos</label>
+        <input type="checkbox" name="selectAll" title="Seleccionar todos los productos" 
+            class="slds-m-around_x-small" style="vertical-align: middle;" checked={allChecked}
+            onchange={handleChangeSelectAll}
+            >
+    </div>
+  </div>
+
+  <lightning-card class="card">
+    <!-- Accordions -->
+    <lightning-accordion class="slds-accordion" allow-multiple-sections-open="true" onsectiontoggle={handleSectionToggle}
+      active-section-name={packs}>
+      <template for:each={objClone.listadePaquetes} for:item="paquete" for:index="indexPack">
+        <div key={paquete.idPaquete} title="" class="slds-text-heading_medium title-via" data-via={paquete.idOrigen}>
+            <template if:true={paquete.idOrigen}>{paquete.idOrigen}</template>
+            <template if:false={paquete.idOrigen}>Productos que no requieren viabilidad</template>
+        </div>
+        <lightning-accordion-section class="sslds-accordion__section slds-var-m-bottom_medium"
+          name={paquete.idPaquete} label={paquete.label} key={paquete.idPaquete} id={paquete.idPaquete}>
+          <div>
+            <template for:each={paquete.listadeProduct} for:item="producto" for:index="indexProd">
+              <c-cotizador-producto 
+                producto={producto} valoriva={valorIVA} id-paquete={paquete.idPaquete} key={producto.Id}
+                index-paquete={indexPack} index-producto={indexProd} 
+                onchangedescuento={handleChangeDescuento}
+                input-descuento-masivo={inputMassivePercentageValue}
+                onlimpiaropciones={handleLimpiarOpciones} 
+                oncheckboxchange={handleCheckboxChange} 
+                onopcionselected={handleOpcionSelected}
+                onproductchange={handleProductChange}
+                onalertapaquete={handleAlertaPaquete} 
+                option-selected={optionSelected}
+                custom-labels={customLabels}>
+              </c-cotizador-producto>
+            </template>
+          </div>
+        </lightning-accordion-section>
+      </template>
+    </lightning-accordion>
+
+    <!-- Totales -->
+    <div class="totales slds-grid slds-grid_vertical-align-center">
+      <div class="slds-col slds-size_4-of-15 slds-text-align_center">
+        <span class="slds-text-color_default">Total Unica Vez</span><!-- span data-id="totalUnicaVConDesc">{cotizacionTotalUnicaVConDesc}</span -->
+        <lightning-formatted-number class="slds-form-element__static slds-truncate"
+          value={cotizacionTotalUnicaVConDesc} data-id="totalUnicaVConDesc" format-style="currency">
+        </lightning-formatted-number>
+      </div>
+
+      <div class="slds-col slds-size_4-of-15 slds-text-align_center">
+        <span class="slds-text-color_default">Total Recurrente</span>
+        <lightning-formatted-number class="slds-form-element__static slds-truncate"
+          value={cotizacionTotalRecurrConDesc} data-id="totalRecurrConDesc" format-style="currency">
+        </lightning-formatted-number>
+      </div>
+
+      <!-- Total Unica Vez +IVA -->
+      <div class="slds-col slds-size_4-of-15 slds-text-align_center slds-text-title_bold">
+        <div class="totalContainer">
+          <div class="slds-form-element slds-hint-parent anchoColumnaTotal">
+            <span class="slds-text-color_default">Total Unica Vez +IVA</span>
+            <lightning-formatted-number class="slds-form-element__static slds-truncate"
+              value={cotizacionTotalUnicaVIva} data-id="totalUnicaVMasIva" format-style="currency">
+            </lightning-formatted-number>
+          </div>
+          <!-- Alert -->
+          <div class="slds-form-element slds-hint-parent iconAlerContainer">
+            <span class="slds-form-element__label slds-truncate topIconAlert">&nbsp;</span>
+            <br/>
+            <span if:true={bShowAlertUnicaVez} class="slds-icon_container slds-icon-utility-announcement iconAlert">
+              <lightning-icon size="x-small" class="hasTooltip" icon-name="utility:warning" title="Descuento excede el máximo permitido" variant="error"></lightning-icon>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Total Recurrente -->
+      <div class="slds-col slds-size_4-of-15 slds-text-align_center slds-text-title_bold">
+        <div class="totalContainer">
+          <div class="slds-form-element slds-hint-parent anchoColumnaTotal">
+            <span class="slds-text-color_default">Total Recurrente + IVA</span>
+            <lightning-formatted-number class="slds-form-element__static slds-truncate"
+              value={cotizacionTotalRecurrIva} data-id="totalRecurrMasIva" format-style="currency">
+            </lightning-formatted-number>
+          </div>
+          <!-- Alert -->
+          <div class="slds-form-element slds-hint-parent iconAlerContainer">
+            <span class="slds-form-element__label slds-truncate topIconAlert">&nbsp;</span>
+            <br/>
+            <span if:true={bShowAlertRecurrente} class="slds-icon_container slds-icon-utility-announcement iconAlert">
+              <lightning-icon size="x-small" class="hasTooltip" icon-name="utility:warning" title="Descuento excede el máximo permitido" variant="error"></lightning-icon>
+
+            </span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Boton Guardar -->
+      <div class="slds-col slds-size_4-of-15 slds-text-align_center">
+        <div class="totalContainer">
+          <div class="slds-form-element slds-hint-parent anchoColumnaTotal">
+              <div class="slds-text-align_right slds-col">
+                <lightning-button variant="brand" label="Crear Cotización" disabled = {disableButton}
+              title="Crear Cotización" onclick={validarQuote} ></lightning-button>
+              </div> 
+          </div>
+        </div>
+      </div>
+      <!-- Spinner --> 
+      <template if:false={loaded}>
+          <lightning-spinner alternative-text="Loading"></lightning-spinner>
+      </template>
+      <c-os_-mensajes-validaciones class= "mensajeError" valbloqueantesinput={mensajesValidaciones}></c-os_-mensajes-validaciones>
+    </div>
+  </lightning-card>
+</template>

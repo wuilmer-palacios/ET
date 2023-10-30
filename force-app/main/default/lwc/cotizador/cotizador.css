@@ -1,0 +1,66 @@
+.slds-accordion{
+    font:700;
+    padding-bottom: 100px;
+}
+
+.sslds-accordion__section{
+    background-color: whitesmoke;
+}
+
+div.totales {
+    background-color: rgb(241, 239, 239);
+    height: 75px;
+    position: fixed;
+    bottom: 0px;
+    padding: 30px;
+    width: 100%;
+    left: 0px;
+    z-index: 10000;
+    border-top: 0px;
+    box-shadow: 0px -2px 6px 0px #aaa;
+}
+
+div.totalContainer {
+    width: 180px;
+    height: 40px;
+    margin: auto;
+}
+
+div.anchoColumnaTotal {
+    width: 160px;
+    margin: auto;
+    float: left;
+    display: block;
+}
+
+div.iconAlerContainer {
+    width: 20px;
+    margin: auto;
+    float: left;
+}
+
+.topIconAlert {
+    padding-top: 0px;
+    margin-bottom: 0px;
+    width: 50px;
+    height: 15px;
+}
+
+.iconAlert {
+    padding-top: 0px;
+    height: 14px;
+}
+
+.mensajeError{
+    display: none;
+    position: absolute;
+    top: -70px;
+    width: inherit;
+}
+
+div.title-via{
+    color: #16325c;
+    margin: 5px 0 10px;
+    padding: 5px 0;
+    border-bottom: 1.8px solid rgb(88, 118, 163);
+}

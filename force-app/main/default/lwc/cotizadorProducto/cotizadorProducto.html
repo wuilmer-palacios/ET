@@ -1,0 +1,121 @@
+<!-- sldsValidatorIgnore -->
+<template>
+  <div class="accordion lwc_producto">
+    <div
+      class="producto slds-page-header--object-home slds-page-header_joined slds-page-header slds-shrink-none test-headerRegion forceListViewManagerHeader">
+      <div class="slds-grid slds-is-open slds-grid_vertical-align-center">
+
+        <!-- Arrows -->
+        <div class="slds-var-p-right_small" style="width: 30px;">
+          <lightning-icon class="" data-id="dash" icon-name="utility:dash" alternative-text="" size="small"
+            title="" onclick={handleClickDivAccordion}>
+          </lightning-icon>
+          <lightning-icon class="" style="display: none;" data-id="add" icon-name="utility:add"
+            alternative-text="" size="small" title="" onclick={handleClickDivAccordion}>
+          </lightning-icon>
+        </div>
+
+        <!-- Origen, Nombre del Producto, Link Quote, Cuenta, Cantidad de Productos -->
+        <div class="slds-col slds-size_6-of-12" style="margin-left: 5px;">
+          <div class="slds-breadcrumb__item">
+            <p><lightning-formatted-url value={urlViability} label={viabilidad}
+                target="_self"></lightning-formatted-url></p>
+          </div>
+          <div class="slds-page-header__name-title">
+            <h1
+              class="slds-scrollable_none selectedListView slds-page-header__title slds-truncate slds-var-p-right_xx-small uiOutputText">
+              {producto.product}</h1>
+          </div>
+          <div class="">
+            <lightning-formatted-url value={urlServiceAccount} label={producto.ServiceAccName}
+              target="_self"></lightning-formatted-url>
+            <span class=""> • Cantidad: <b>{producto.cantidad}</b></span>
+          </div>
+        </div>
+
+        <!-- Icono Limpiar opciones -->
+        <div class="iconClearContainer">
+          <div class="slds-text-heading_small"><!-- Limpiar Seleccion -->
+            <!-- Tool Tip -->
+            <lightning-helptext icon-name="utility:ban" size="x-small" content="Limpiar Seleccion" style="z-index: 0;"
+              onclick={handleClickLimpiarOpciones}>
+            </lightning-helptext>
+          </div>
+        </div>
+
+        <!-- Total Unica Vez de la Opcion seleccionada x la cantidad de Productos-->
+        <div class="slds-col slds-no-flex slds-grid slds-shrink">
+          <div class="slds-form-element slds-hint-parent anchoColumnasOpciones">
+            <span title="Total &Uacute;nica Vez" class="slds-form-element__label slds-truncate"> Valor &Uacute;nica
+              Vez</span>
+            <lightning-formatted-number class="slds-form-element__static slds-truncate"
+              value={totalUnicaVezIVA} format-style="currency">
+            </lightning-formatted-number>
+          </div>
+        </div>
+        <!-- Alerta Total Unica Vez -->
+        <div class="slds-col slds-no-flex slds-grid slds-shrink">
+          <div class="slds-form-element slds-hint-parent">
+            <span class="slds-form-element__label slds-truncate topIconAlertOpciones">&nbsp;</span>
+            <br />
+            <span if:true={bShowAlertUnicaVez}
+              class="slds-icon_container slds-icon-utility-announcement iconAlertOpciones">
+              <lightning-icon size="x-small" class="hasTooltip" icon-name="utility:warning" title="Descuento excede el máximo permitido" variant="error"></lightning-icon>
+            </span>
+          </div>
+        </div>
+
+        <!-- Total Recurrente de la Opcion seleccionada x la cantidad de Productos-->
+        <div class="slds-col slds-no-flex slds-grid slds-shrink">
+          <div class="slds-form-element slds-hint-parent anchoColumnasOpciones">
+            <span title="Total &Uacute;nica Vez" class="slds-form-element__label slds-truncate"> Valor Recurrente</span>
+            <lightning-formatted-number class="slds-form-element__static slds-truncate"
+              value={totalRecurrenteIVA} format-style="currency">
+            </lightning-formatted-number>
+          </div>
+        </div>
+        <!-- Alerta Total Recurrente -->
+        <div class="slds-col slds-no-flex slds-grid slds-shrink">
+          <div class="slds-form-element slds-hint-parent">
+            <span class="slds-form-element__label slds-truncate topIconAlertOpciones">&nbsp;</span>
+            <br />
+            <span if:true={bShowAlertRecurrente}
+              class="slds-icon_container slds-icon-utility-announcement iconAlertOpciones">
+              <lightning-icon size="x-small" class="hasTooltip" icon-name="utility:warning" title="Descuento excede el máximo permitido" variant="error"></lightning-icon>
+            </span>
+          </div>
+        </div>
+
+        <!-- DESCUENTO -->
+        <template if:false={bDiscountIsEmpty}>
+
+          <!-- Input Descuentos -->
+          <div class="slds-col slds-no-flex slds-grid slds-shrink anchoColumnaDescuento">
+            <div class="slds-form-element slds-hint-parent">
+              <lightning-input type="number" data-id={producto.QuoteLineItemId} name="descuento" label="Descuento"
+                value={inputDescuentoMasivo} onchange={handleChangeDescuento} formatter="percent-fixed"
+                class="e_input_descuento" disabled={disableDiscount}></lightning-input>
+            </div>
+            <lightning-helptext icon-name="utility:info" content={descuentoHelpText} style="z-index: 0;"></lightning-helptext>
+          </div>
+        </template>
+
+        <div class="slds-col slds-p-horizontal_small slds-p-top_large slds-text-align_right">
+          <input type="checkbox" checked={checkedProduct} onchange={handleCheckboxChange} data-producto={producto} name="descMasivo" disabled={disableDiscount}/>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Opciones Producto -->
+  <div class="panel slds-var-m-bottom_large" data-react-option-selected={optionSelected} style="display: block;">
+    <template for:each={producto.listaConfiguraciones} for:item="opcion" for:index="indexOpcion">
+      <c-cotizador-opciones key={opcion.Id} opcion={opcion} index-paquete={indexPaquete} index-producto={indexProducto}
+        index-opcion={indexOpcion} es-subproducto={producto.esSubproducto} input-step-profile={profileToApprove} onopcionselected={handleOpcionSelected} onlimpiaropciones={handleLimpiarOpciones}
+        onalertadescuento={handleAlertaDescuento} index-selected={indexOpcionSelected} descuentoactual={inputDescuentoMasivo} descmaxcomercial={AllowedDiscount} descmaxpermitido={NextPossibleDiscount}
+        custom-labels={customLabels}>
+      </c-cotizador-opciones>
+    </template>
+  </div>
+</template>

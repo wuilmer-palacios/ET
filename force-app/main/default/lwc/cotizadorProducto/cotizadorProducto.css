@@ -1,0 +1,63 @@
+.slds-page-header__name-title{
+    font-weight: bold;
+}
+
+.slds-var-p-right_x-small{
+    font-weight: lighter;
+}
+
+.producto{
+    background-color: rgb(241, 239, 239);
+}
+
+.active, .accordion:hover{
+    background-color: rgb(215, 217, 217);
+    box-shadow: inset 0 -3px 0 #eee;
+}
+
+.accordion lightning-icon{
+    cursor: pointer;
+}
+
+lightning-input.w-60 input.slds-input{
+    width: 60px;
+}
+
+.e_input_descuento{
+    width: 65px;
+}
+
+.descuentoConError {
+    text-align: center;
+    color: red;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.anchoColumnaDescuento {
+    width: 150px;
+}
+
+.anchoColumnasOpciones {
+    width: 100px;
+}
+
+.topIconAlertOpciones {
+    padding-top: 0px;
+    margin-bottom: 0px;
+    width: 50px;
+}
+
+.iconAlertOpciones {
+    padding-top: 0px;
+}
+
+div.iconClearContainer {
+    width: 180px;
+    text-align: center;
+}
+
+div.iconClearContainer div {
+    width: 58px;
+    margin: auto;
+}

@@ -1,0 +1,87 @@
+.attr_opc lightning-badge{
+    margin-bottom: 5px;
+    margin-left: 8px;
+}
+
+.precio_opc > div {
+    position: relative;
+    cursor: context-menu;
+}
+
+.slds-popover{
+    position: absolute; 
+    display: none;
+    width: max-content;
+    top: -33%;
+}
+
+.cp-align-center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cp-align-center .slds-popover{
+    left: -102%;
+}
+
+.hasTooltip:hover + .slds-popover {
+    display: block;
+}
+
+.alertaDescuento {
+    visibility: hidden;
+}
+
+.anchoColumnasOpciones .slds-popover{
+    left: 0;
+}
+
+.opciones{
+    border: 1px solid #ddd;
+    background: #fff;
+}
+
+.opcion{
+    border-bottom: 1px solid #eee;
+    padding: 5px 0 5px 10px;
+}
+
+.anchoColumnasOpciones {
+    width: auto;
+}
+
+.topIconAlertOpciones {
+    padding-top: 0px;
+}
+
+.iconAlertOpciones {
+    padding-top: 6px;
+}
+
+.alertUnicaVezSeparador {
+    font-size: 9px;
+}
+
+.tarifaConDescuento {
+    color: green;
+}
+
+.tarifaConDescuentoComercial {
+    color: green;
+}
+
+.tarifaConDescuentoPermitido {
+    color: #f8923c; /* orange; */
+}
+
+.tarifaConDescuentoMayorAlPermitido {
+    color: red;
+}
+
+.tarifaSinDescuento {
+    color: silver;
+    font-size: 13px;
+    text-decoration:line-through;
+    display: none;
+}

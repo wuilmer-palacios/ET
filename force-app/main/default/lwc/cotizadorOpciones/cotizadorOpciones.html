@@ -1,0 +1,128 @@
+<!-- sldsValidatorIgnore -->
+<template>
+  <div class="opciones">
+    <div class="opcList_container">
+
+      <!-- Contenedor Opcion -->
+      <div class="slds-grid opcion slds-grid_vertical-align-center">
+
+        <!-- Input Radio -->
+        <div class="slds-var-p-right_small">
+          <input type="radio" value={indexOpcion} name={inputRadioName} data-react={descuentoactual}
+            data-id="actual" onchange={handleChangeInputRadio} />
+        </div>
+
+        <!-- Atributos -->
+        <div class="slds-col slds-size_6-of-12 attr_opc" >
+          <template for:each={parametrosDestacados} for:item="parametro">
+              <lightning-badge key={parametro.Id} label={parametro.labelValor}></lightning-badge>
+          </template>
+          <template if:true={bHayParametrosRestantes}>
+            <a if:false={bMostrarParametrosRestantes} onclick={handleMostrarParametrosRestantes} style="margin-left: 8px; padding-left: 8px; white-space: nowrap;">Ver más</a>
+            <template if:true={bMostrarParametrosRestantes}>
+              <template for:each={parametrosRestantes} for:item="parametro">
+                  <lightning-badge key={parametro.Id} label={parametro.labelValor}></lightning-badge>
+              </template>
+            </template>
+            <a if:true={bMostrarParametrosRestantes} onclick={handleOcultarParametrosRestantes} style="margin-left: 8px; padding-left: 8px; white-space: nowrap;">Ver menos</a>
+          </template>
+        </div>
+
+
+        <!-- Contenedor Tarifas -->
+        <div class="slds-grid slds-col slds-size_5-of-12 precio_opc slds-no-flex slds-shrink">
+
+          <!-- Primera Columna de Tarifas. Unica Vez y/o Recurrente. -->
+          <div class="slds-col slds-no-flex slds-grid slds-shrink">
+            <div class="slds-form-element slds-hint-parent anchoColumnasOpciones">
+              <div>&nbsp;</div>
+              <lightning-formatted-text if:true={bValorUnicaVezMayorAcero} class="slds-form-element__label slds-truncate e_bold"
+                value="Valor Única Vez"></lightning-formatted-text>
+              <lightning-formatted-text if:true={bValorRecurenteMayorAcero} class="slds-form-element__label slds-truncate e_bold"
+                value="Valor Recurrente"></lightning-formatted-text>
+            </div>
+          </div>
+
+          <!--  Tarifa Piso  -->
+          <div class="slds-col slds-no-flex slds-grid slds-shrink">
+            <div class="slds-form-element slds-hint-parent anchoColumnasOpciones">
+              <span title="Tarifa Lista" class="slds-form-element__label slds-truncate"> Tarifa Piso</span>
+              <lightning-formatted-number if:true={bValorUnicaVezMayorAcero} class="slds-form-element__static slds-truncate"
+                value={opcion.valorUnicaVez} format-style="currency">
+              </lightning-formatted-number>
+              <lightning-formatted-number if:true={bValorRecurenteMayorAcero} class="slds-form-element__static slds-truncate"
+                value={opcion.valorRecurrente} format-style="currency">
+              </lightning-formatted-number>
+            </div>
+          </div>
+
+          <!--  Tarifa Lista  -->
+          <div class="slds-col slds-no-flex slds-grid slds-shrink">
+            <div class="slds-form-element slds-hint-parent anchoColumnasOpciones">
+              <span title="Tarifa Lista" class="slds-form-element__label slds-truncate"> Tarifa Lista</span>
+              <!-- Unica Vez -->
+              <lightning-formatted-number if:true={bValorUnicaVezMayorAcero} class=" slds-form-element__static slds-truncate"
+                value={opcion.valUnicaVListConDesc} data-id="tarifaUnicaVConDesc" format-style="currency"></lightning-formatted-number>
+              <!-- Tool Tip -->
+              <div class="slds-popover slds-popover_tooltip slds-nubbin_bottom-left" role="tooltip"
+                data-tooltipid="tarifaUnicaVConDesc">
+                <div class="slds-popover__body">{textoToolTipUnicaVez}</div>
+              </div>
+              <!-- Tachado -->
+              <lightning-formatted-number if:true={bValorUnicaVezMayorAcero} class="slds-form-element__static slds-truncate tarifaSinDescuento"
+                value={opcion.valorUnicaVezLista} data-idtachado="tarifaListaTachada" format-style="currency">
+              </lightning-formatted-number>
+
+              <!-- Recurrente -->
+              <lightning-formatted-number if:true={bValorRecurenteMayorAcero} class=" slds-form-element__static slds-truncate"
+                value={opcion.valRecurrListConDesc} data-id="tarifaRecurrConDesc" format-style="currency"></lightning-formatted-number>
+              <!-- Tool Tip -->
+              <div class="slds-popover slds-popover_tooltip slds-nubbin_bottom-left" role="tooltip"
+                data-tooltipid="tarifaRecurrConDesc">
+                <div class="slds-popover__body">{textoToolTipRecurrente}</div>
+              </div>
+              <!-- Recurrente Warning-->
+              <lightning-formatted-number if:true={bValorRecurenteMayorMargen} class="slds-form-element__static slds-truncate"
+              value={opcion.valRecurrListConDesc} data-id="tarifaConDescuentoPermitido" format-style="currency">
+          </lightning-formatted-number>
+          <!-- Tool Tip Warning-->
+          <div class="slds-popover slds-popover_tooltip slds-nubbin_bottom-left" role="tooltip" data-tooltipid="tarifaConDescuentoPermitido">
+              <div class="slds-popover__body">{textoToolTipMargen}</div>
+          </div>
+              <!-- Tachado -->
+              <lightning-formatted-number if:true={bValorRecurenteMayorAcero} class="slds-form-element__static slds-truncate tarifaSinDescuento"
+                value={opcion.valorRecurrenteLista} data-idtachado="tarifaListaTachada" format-style="currency"></lightning-formatted-number>
+              <!-- profiles -->
+              <lightning-formatted-text if:true={stepProfileType} class="slds-form-element__label slds-truncate e_bold"
+                value={stepProfileType}></lightning-formatted-text>  
+            </div>
+          </div>
+
+          <!--  Tarifa Lista con Descuento +IVA.  -->
+          <div class="slds-col slds-no-flex slds-grid slds-shrink">
+            <div class="slds-form-element slds-hint-parent anchoColumnasOpciones">
+              <span title="Tarifa Lista" class="slds-form-element__label slds-truncate"> Tarifa +IVA</span>
+              <lightning-formatted-number if:true={bValorUnicaVezMayorAcero} class="slds-form-element__static slds-truncate"
+                value={opcion.valUnicaVListIVAConDesc} format-style="currency"></lightning-formatted-number>
+              <lightning-formatted-number if:true={bValorRecurenteMayorAcero} class="slds-form-element__static slds-truncate"
+                value={opcion.valRecurrListIVAConDesc} format-style="currency"></lightning-formatted-number>
+                <lightning-formatted-number if:true={bValorRecurenteMayorMargen} class="slds-form-element__static slds-truncate"
+                value={opcion.valRecurrListIVAConDesc} format-style="currency"></lightning-formatted-number>
+            </div>
+          </div>
+
+          <!-- Alerts Tarifas Lista con Descuento, Unica Vez y Recurrente -->
+          <div class="slds-col slds-no-flex slds-grid slds-shrink">
+            <div class="slds-form-element slds-hint-parent cp-align-center alertaDescuento">
+                <lightning-icon size="x-small" class="hasTooltip" icon-name="utility:warning" title="Descuento excede el máximo permitido" variant="error"></lightning-icon>
+                <div class="slds-popover slds-popover_tooltip slds-nubbin_bottom-left" 
+                role="tooltip">
+                    <div class="slds-popover__body">Descuento excede el máximo permitido</div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

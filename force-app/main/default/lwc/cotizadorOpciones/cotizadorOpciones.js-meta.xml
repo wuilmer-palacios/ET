@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <isExposed>true</isExposed>
+    <runtimeNamespace>vlocity_cmt</runtimeNamespace>
+    <description>TPV Componente para mostrar las opciones por productos y paquetes de productos de la respuesta de gestor</description>
+</LightningComponentBundle>
