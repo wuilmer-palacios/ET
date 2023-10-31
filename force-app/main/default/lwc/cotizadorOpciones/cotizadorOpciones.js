@@ -139,7 +139,6 @@ export default class CotizadorOpciones extends OmniscriptBaseMixin(LightningElem
         this.bValorRecurenteMayorAcero = false;
         this.bValorRecurenteMayorMargen = true;
         this.bPerfil = false;
-        consolelog("Entró en el bloque de margen", this.bValorRecurenteMayorAcero, this.bValorRecurenteMayorMargen, this.bPerfil);
         }
 
         //Booleano para cuando es Gerente o VP
@@ -147,7 +146,6 @@ export default class CotizadorOpciones extends OmniscriptBaseMixin(LightningElem
         this.bValorRecurenteMayorAcero = false;
         this.bValorRecurenteMayorMargen = false;
         this.bPerfil = true;
-        consolelog("Entró en el bloque de perfil", this.bValorRecurenteMayorAcero, this.bValorRecurenteMayorMargen, this.bPerfil);
         }       
 
         if ((this.opcion.valorUnicaVez == 0 || this.opcion.valorUnicaVez == null) && (this.opcion.valorRecurrente == 0 || this.opcion.valorRecurrente == null)) {
@@ -209,12 +207,6 @@ export default class CotizadorOpciones extends OmniscriptBaseMixin(LightningElem
 
     @api
     refrescarTarifas() {
-
-        console.log('profileeeeee: ', this.inputStepProfile);
-        console.log('inputProfileMargin: ', this.inputProfileMargin);
-        console.log("bPerfil:", this.bPerfil);
-        console.log("bValorRecurenteMayorMargen:", this.bValorRecurenteMayorMargen);
-        console.log("bValorRecurenteMayorAcero:", this.bValorRecurenteMayorAcero);
 
         this.template.querySelector('.alertaDescuento').style.visibility = 'hidden';
         this.alertaDescuento = false;
