@@ -81,6 +81,14 @@
                 data-tooltipid="tarifaRecurrConDesc">
                 <div class="slds-popover__body">{textoToolTipRecurrente}</div>
               </div>
+               <!-- perfil succes-->
+               <lightning-formatted-number if:true={bPerfil} class="slds-form-element__static slds-truncate"
+               value={opcion.valRecurrListConDesc} data-id="tarifaRecurrConDesc" format-style="currency">
+           </lightning-formatted-number>
+           <!-- Tool Tip succes profile-->
+           <div class="slds-popover slds-popover_tooltip slds-nubbin_bottom-left" role="tooltip" data-tooltipid="tarifaRecurrConDesc">
+               <div class="slds-popover__body">{textoToolTipProfile}</div>
+           </div>
               <!-- Recurrente Warning-->
               <lightning-formatted-number if:true={bValorRecurenteMayorMargen} class="slds-form-element__static slds-truncate"
               value={opcion.valRecurrListConDesc} data-id="tarifaConDescuentoPermitido" format-style="currency">
@@ -107,6 +115,8 @@
               <lightning-formatted-number if:true={bValorRecurenteMayorAcero} class="slds-form-element__static slds-truncate"
                 value={opcion.valRecurrListIVAConDesc} format-style="currency"></lightning-formatted-number>
                 <lightning-formatted-number if:true={bValorRecurenteMayorMargen} class="slds-form-element__static slds-truncate"
+                value={opcion.valRecurrListIVAConDesc} format-style="currency"></lightning-formatted-number>
+                <lightning-formatted-number if:true={bPerfil} class="slds-form-element__static slds-truncate"
                 value={opcion.valRecurrListIVAConDesc} format-style="currency"></lightning-formatted-number>
             </div>
           </div>

@@ -201,6 +201,9 @@ export default class Cotizador extends OmniscriptBaseMixin(NavigationMixin(Light
             opcion.valorUnicaVezLista = pricingUV.TarifaLista;
             opcion.valorRecurrenteListaIva = pricingMensual.TarifaListaIVA;
             opcion.valorUnicaVezListaIva = pricingUV.TarifaListaIVA;
+            //Agrego nuevo nodo
+            opcion.currencies = pricingMensual.currencies;
+            console.log('Linea-206' + opcion.currencies);
           }
 
           // ordenar Atributos por Valor

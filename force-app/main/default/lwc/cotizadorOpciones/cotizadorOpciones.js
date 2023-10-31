@@ -25,6 +25,9 @@ export default class CotizadorOpciones extends OmniscriptBaseMixin(LightningElem
 
     //% Margen de ganancia
     @api margenGanancia;
+
+    //ProfileMargin
+    @api inputProfileMargin;
     
     titleAlertDescuento = '';
     // nombre del grupo input radio por Producto
@@ -42,20 +45,29 @@ export default class CotizadorOpciones extends OmniscriptBaseMixin(LightningElem
     // flags Tarifas mayor a Margen
     bValorRecurenteMayorMargen = false;
 
+     // flags perfiles
+     bPerfil = false;
+
     // alertas Tarifas: flags y textos de ayuda
     bShowAlertUnicaVez = false;
     bShowAlertRecurrente = false;
+
     //Margin
     bShowAlertRecurrenteMargin = false;
+    //Profile
+    bShowAlertProfile = false;
+
     titleAlertUnicaVez = "";
     titleAlertRecurrente = "";
 
     bShowToolTipUnicaVez = false;
     bShowToolTipRecurrente = false;
     bShowToolTipRecurrenteMargin = false;
+    bShowToolTipPerfil = false;
     textoToolTipUnicaVez = "";
     textoToolTipRecurrente = "";
     textoToolTipMargen = "";
+    textoToolTipProfile = "";
     txtDescPermitido = "Tarifa con descuento"; // labelDescuentoPermitido
     txtDescConPermiso = "Requiere aprobación"; // labelDescuentoReqAprobacion;
     txtDescConPermisoMargin = "Requiere aprobación"; // labelDescuentoReqAprobacionMargen;
@@ -63,6 +75,7 @@ export default class CotizadorOpciones extends OmniscriptBaseMixin(LightningElem
     txtDescExcPermitidoMargin = "Descuento excede el % margen"; // labelDescuentoExcMaxPermitidoMargen;
     txtDescNoAplica = "Este porcentaje no aplica para la opción"; // labelDescuentoNoAplicable;
     txtDescPermitidoMargin = "Este porcentaje es permitido debido al % margen"; // labelDescuentoMargen;
+    txtDescPermitidoPerfil = "Este porcentaje es permitido para tu perfil"; // labelDescuentoPerfil;
     // Atributos: destacados y restantes.
     maxParametrosDestacados = 6;
     parametrosDestacados = [];
@@ -101,28 +114,41 @@ export default class CotizadorOpciones extends OmniscriptBaseMixin(LightningElem
         this.txtDescPermitidoMargin = "Este porcentaje es permitido debido al % margen";
         this.txtDescExcPermitidoMargin = "Descuento excede el % margen";
         this.txtDescConPermisoMargin = "Requiere aprobacion debido al % margen";
+        this.txtDescPermitidoPerfil = "Este porcentaje es permitido para tu perfil"
     }
 
     initControlValues() {
 
         // definir nombre del grupo input radio por Producto
         this.inputRadioName = "pack" + this.indexPaquete + "prod" + this.indexProducto;
-        this.margenGanancia = ((1 - (this.opcion.valorRecurrente / this.opcion.valorRecurrenteLista)) * 100);
-    
+        this.margenGanancia = ((1 - (this.opcion.valorRecurrente / this.opcion.valorRecurrenteLista)) * 100).toFixed(2);
+
         // Definir Booleanos para valores de Tarifa mayores a cero
         if (this.opcion.valorUnicaVez > 0) {
             this.bValorUnicaVezMayorAcero = true;
         }
-        if (this.opcion.valorRecurrente > 0 && this.descuentoactual <= this.descmaxpermitido) {
+        //Booleano para cuando el margen sea menor al descuento permitido
+        if (this.opcion.valorRecurrente > 0 && this.descuentoactual <= this.descmaxpermitido ) {
             this.bValorRecurenteMayorAcero = true;
             this.bValorRecurenteMayorMargen = false;
+            this.bPerfil = false;
 
         }
-        //Booleano para Margin
-        if (this.descuentoactual > this.descmaxpermitido) {
-            this.bValorRecurenteMayorAcero = false;
-            this.bValorRecurenteMayorMargen = true;
+        //Booleano para cuando el margen sea mayor al descuento permitido
+        if (this.descuentoactual > this.descmaxpermitido && (this.inputProfileMargin !== 'Gerente' && this.inputProfileMargin !== 'Vicepresidente')) {
+        this.bValorRecurenteMayorAcero = false;
+        this.bValorRecurenteMayorMargen = true;
+        this.bPerfil = false;
+        consolelog("Entró en el bloque de margen", this.bValorRecurenteMayorAcero, this.bValorRecurenteMayorMargen, this.bPerfil);
         }
+
+        //Booleano para cuando es Gerente o VP
+        if (this.descuentoactual > this.descmaxpermitido && (this.inputStepProfile === 'Gerente' || this.inputStepProfile === 'Vicepresidente')) {
+        this.bValorRecurenteMayorAcero = false;
+        this.bValorRecurenteMayorMargen = false;
+        this.bPerfil = true;
+        consolelog("Entró en el bloque de perfil", this.bValorRecurenteMayorAcero, this.bValorRecurenteMayorMargen, this.bPerfil);
+        }       
 
         if ((this.opcion.valorUnicaVez == 0 || this.opcion.valorUnicaVez == null) && (this.opcion.valorRecurrente == 0 || this.opcion.valorRecurrente == null)) {
             this.bValorRecurenteMayorAcero = true;
@@ -184,11 +210,11 @@ export default class CotizadorOpciones extends OmniscriptBaseMixin(LightningElem
     @api
     refrescarTarifas() {
 
-        console.log('stepProfileTypeMargin en el segundo hijo:', this.inputStepProfile);
-        console.log('valorRecurrente_hijo1: ', this.opcion.valorRecurrente);
-        console.log('valorUnicaVez_hijo1: ', this.opcion.valorUnicaVez);
-        console.log('valorRecurrentelita_hijo1: ', this.opcion.valorRecurrenteLista);
-        console.log('margenGanancia: ', this.margenGanancia);
+        console.log('profileeeeee: ', this.inputStepProfile);
+        console.log('inputProfileMargin: ', this.inputProfileMargin);
+        console.log("bPerfil:", this.bPerfil);
+        console.log("bValorRecurenteMayorMargen:", this.bValorRecurenteMayorMargen);
+        console.log("bValorRecurenteMayorAcero:", this.bValorRecurenteMayorAcero);
 
         this.template.querySelector('.alertaDescuento').style.visibility = 'hidden';
         this.alertaDescuento = false;
@@ -202,6 +228,7 @@ export default class CotizadorOpciones extends OmniscriptBaseMixin(LightningElem
         var textoToolTipUnicaVez = "";
         var textoToolTipRecurrente = "";
         var textoToolTipMargen = "";
+        var textoToolTipProfile = "";
 
         if (this.esSubproducto && this.indexOpcion != this.indexSelected) {
             descuento = 0;
@@ -214,23 +241,8 @@ export default class CotizadorOpciones extends OmniscriptBaseMixin(LightningElem
         this.bShowAlertUnicaVez = this.bValorUnicaVezMayorAcero && this.opcion.alertDescUnicaVez;
         this.bShowAlertRecurrente = this.bValorRecurenteMayorAcero && this.opcion.alertDescRecurrente;
         this.bShowAlertRecurrenteMargin = this.bValorRecurenteMayorMargen;
-        // this.titleAlertUnicaVez   = this.bShowAlertUnicaVez   ? "Descuento " + this.opcion.descMaxUnicaVPiso + "%" : "";
-        // this.titleAlertRecurrente = this.bShowAlertRecurrente ? "Descuento " + this.opcion.descMaxRecurrPiso + "%" : "";
-
-        // console.log('this.bShowAlertUnicaVez: ', this.bShowAlertUnicaVez, ' this.bShowAlertRecurrente: ',this.bShowAlertRecurrente)
-
-        //Evento que manda los flags bShowAlertUnicaVez y bShowAlertRecurrente al cotizadorProducto
-        // const alertaDescuentoEvent = new CustomEvent('alertadescuento', {
-        //     detail: {
-        //         alertaUV: this.bShowAlertUnicaVez,
-        //         alertaRec: this.bShowAlertRecurrente
-        // }
-        // });
-        // this.dispatchEvent(alertaDescuentoEvent);
-
-        // console.log('descuento', descuento)
-
-        // define Clase CSS para Tarifas Lista +IVA
+        this.bShowAlertProfile = this.bPerfil;
+   
         // Descuento OK
         if (descuento > 0 && descuento <= descMaxComercial && descuento <= this.margenGanancia ) {
             console.log('perfil en el segundo hijo:', this.stepProfileTypeMargin);
@@ -238,20 +250,33 @@ export default class CotizadorOpciones extends OmniscriptBaseMixin(LightningElem
             this.bShowToolTipUnicaVez = this.bValorUnicaVezMayorAcero;
             this.bShowToolTipRecurrente = this.bValorRecurenteMayorAcero;
             this.bShowToolTipRecurrenteMargin = this.bValorRecurenteMayorMargen;
+            this.bShowToolTipPerfil = this.bPerfil;
             textoToolTipUnicaVez = this.txtDescPermitido;
             textoToolTipRecurrente = this.txtDescPermitido;
-            textoToolTipMargen = this.txtDescPermitidoMargin;
-            
+            textoToolTipMargen = this.txtDescPermitidoPerfil;
+
         }
         // Descuento requiere Aprobación
-        else if (descuento > descMaxComercial && descuento <= this.margenGanancia) {
+        else if (descuento > descMaxComercial && descuento <= this.margenGanancia && (this.inputProfileMargin !== 'Gerente' && this.inputProfileMargin !== 'Vicepresidente')) {
             discountClassName = "tarifaConDescuentoPermitido"; // descuento permitido;
             this.bShowToolTipUnicaVez = this.bValorUnicaVezMayorAcero;
             this.bShowToolTipRecurrente = this.bValorRecurenteMayorAcero;
             this.bShowToolTipRecurrenteMargin = this.bValorRecurenteMayorMargen;
+            this.bShowToolTipPerfil = this.bPerfil;
             textoToolTipUnicaVez = this.txtDescConPermiso;
             textoToolTipRecurrente = this.txtDescConPermiso;
-            textoToolTipMargen = this.txtDescConPermisoMargin;
+            textoToolTipProfile = this.txtDescPermitidoPerfil;
+        }
+        // Descuento no Aprobación Gerente y VP
+        else if (descuento > descMaxComercial && descuento <= this.margenGanancia && (this.inputProfileMargin === 'Gerente' || this.inputProfileMargin === 'Vicepresidente')) {
+            discountClassName = "slds-text-color_success"; // descuento permitido perfil;
+            this.bShowToolTipUnicaVez = this.bValorUnicaVezMayorAcero;
+            this.bShowToolTipRecurrente = this.bValorRecurenteMayorAcero;
+            this.bShowToolTipRecurrenteMargin = this.bValorRecurenteMayorMargen;
+            this.bShowToolTipPerfil = this.bPerfil;
+            textoToolTipUnicaVez = this.txtDescConPermiso;
+            textoToolTipRecurrente = this.txtDescConPermiso;
+            textoToolTipProfile = this.txtDescPermitidoPerfil;
         }
         // Descuento NO permitido  
         else if (descuento > descMaxPermitido && descuento> this.margenGanancia && descuento <= 100) {
@@ -263,6 +288,7 @@ export default class CotizadorOpciones extends OmniscriptBaseMixin(LightningElem
             this.bShowToolTipUnicaVez = this.bValorUnicaVezMayorAcero;
             this.bShowToolTipRecurrente = this.bValorRecurenteMayorAcero;
             this.bShowToolTipRecurrenteMargin = this.bValorRecurenteMayorMargen;
+            this.bShowToolTipPerfil = this.bPerfil;
             textoToolTipUnicaVez = this.txtDescExcPermitido;
             textoToolTipRecurrente = this.txtDescExcPermitido;
             textoToolTipMargen = this.txtDescExcPermitidoMargin;
@@ -272,6 +298,7 @@ export default class CotizadorOpciones extends OmniscriptBaseMixin(LightningElem
             textoToolTipUnicaVez = "";
             textoToolTipRecurrente = "";
             textoToolTipMargen = "";
+            textoToolTipProfile= "";
 
         }
 
@@ -287,6 +314,12 @@ export default class CotizadorOpciones extends OmniscriptBaseMixin(LightningElem
         }
         if (this.bShowAlertRecurrenteMargin) {
             textoToolTipMargen = this.txtDescNoAplica;
+        }
+        if (this.bShowAlertProfile) {
+            textoToolTipMargen = this.txtDescNoAplica;
+        }
+        if (this.bShowAlertProfile) {
+            textoToolTipProfile = this.txtDescNoAplica;
         }
         this.textoToolTipUnicaVez = textoToolTipUnicaVez;
         this.textoToolTipRecurrente = textoToolTipRecurrente;
